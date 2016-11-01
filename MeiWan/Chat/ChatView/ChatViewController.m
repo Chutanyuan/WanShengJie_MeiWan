@@ -162,7 +162,7 @@
     
     NSDictionary * userdic = [PersistenceManager getLoginUser];
     NSString * session = [PersistenceManager getLoginSession];
-    if ([userdic[@"id"] doubleValue]==100000) {
+    if ([userdic[@"id"] doubleValue]==100000||[userdic[@"id"] doubleValue]==100001) {
         
         //啥也不做
         

@@ -17,6 +17,7 @@
 @implementation ImageViewController
 -(void)viewDidLoad{
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor blackColor];
     UIView *vi = [[UIView alloc]initWithFrame:CGRectZero];
     [self.view addSubview:vi];
     

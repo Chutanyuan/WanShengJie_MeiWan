@@ -28,8 +28,12 @@
 #import "personEditViewController.h"
 #import "FansViewController.h"
 #import "FocusViewController.h"
+#import "findFriendViewController.h"
 
 @interface PersonViewController ()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+{
+    NSString *thesame;
+}
 
 @property(nonatomic,strong)NSArray * cellTitleArray;
 @property(nonatomic,strong)NSDictionary * userMessage;
@@ -51,17 +55,33 @@
     [self.navigationController.navigationBar setBarTintColor:[CorlorTransform colorWithHexString:@"#5EC8F5"]];
     self.navigationController.navigationBar.titleTextAttributes=[NSDictionary dictionaryWithObject:[UIColor whiteColor]forKey:NSForegroundColorAttributeName];
 
+    NSDictionary *userInfo = [PersistenceManager getLoginUser];
+    thesame = [NSString stringWithFormat:@"%ld",[[userInfo objectForKey:@"id"]longValue]];
+    
     self.userMessage = [PersistenceManager getLoginUser];
     [self loadUserData];
-    self.cellTitleArray =@[
-                           @{@"title":@"我要出售时间",@"image":@"chushou"},
-                           @{@"title":@"我的钱包",@"image":@"qianbao"},
-                           @{@"title":@"记录中心",@"image":@"jilu"},
-                           @{@"title":@"公会管理",@"image":@"gonghui"},
-                           @{@"title":@"设置",@"image":@"shezhi"},
-                           @{@"title":@"分享",@"image":@"fenxinag2"}
-                           ];
-    UITableView * tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, dtScreenWidth, dtScreenHeight) style:UITableViewStylePlain];
+    if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
+        self.cellTitleArray =@[
+                               @{@"title":@"我要出售时间",@"image":@"chushou"},
+                               @{@"title":@"搜索好友",@"image":@"qianbao"},
+                               @{@"title":@"记录中心",@"image":@"jilu"},
+                               @{@"title":@"公会管理",@"image":@"gonghui"},
+                               @{@"title":@"设置",@"image":@"shezhi"},
+                               @{@"title":@"分享",@"image":@"fenxinag2"}
+                               ];
+
+    }else{
+        self.cellTitleArray =@[
+                               @{@"title":@"我要出售时间",@"image":@"chushou"},
+                               @{@"title":@"我的钱包",@"image":@"qianbao"},
+                               @{@"title":@"记录中心",@"image":@"jilu"},
+                               @{@"title":@"公会管理",@"image":@"gonghui"},
+                               @{@"title":@"设置",@"image":@"shezhi"},
+                               @{@"title":@"分享",@"image":@"fenxinag2"}
+                               ];
+    }
+    
+        UITableView * tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, dtScreenWidth, dtScreenHeight) style:UITableViewStylePlain];
     self.tableview = tableview;
     tableview.delegate = self;
     tableview.dataSource = self;
@@ -304,9 +324,24 @@
         }
 
     }else if (indexPath.row==1){
-        [self performSegueWithIdentifier:@"walllet" sender:nil];
+        if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
+            findFriendViewController * controller = [[findFriendViewController alloc]init];
+            controller.hidesBottomBarWhenPushed = YES;
+            controller.title = @"搜索好友";
+            [self.navigationController pushViewController:controller animated:YES];
+        }else{
+            [self performSegueWithIdentifier:@"walllet" sender:nil];
+        }
+
     }else if (indexPath.row==2){
-        [self performSegueWithIdentifier:@"invite" sender:nil];
+        if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
+            UIViewController * controller = [[UIViewController alloc]init];
+            controller.hidesBottomBarWhenPushed = YES;
+            controller.title = @"记录中心";
+            [self.navigationController pushViewController:controller animated:YES];
+        }else{
+            [self performSegueWithIdentifier:@"invite" sender:nil];
+        }
     }else if (indexPath.row==3){
         [self performSegueWithIdentifier:@"gonghuiguanli" sender:nil];
         

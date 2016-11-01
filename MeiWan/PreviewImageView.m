@@ -42,7 +42,7 @@
         self.starRectValue =  [NSValue valueWithCGRect:startFrame];
         
         self.contentView = [[UIView alloc] initWithFrame:startFrame];
-        self.contentView.backgroundColor = [UIColor clearColor];
+        self.contentView.backgroundColor = [UIColor blackColor];
         self.contentView.userInteractionEnabled = YES;
         self.contentView.clipsToBounds = YES;
         self.contentView.layer.masksToBounds = YES;

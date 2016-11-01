@@ -7,6 +7,7 @@
 //
 
 #import "TAauthenticateCell.h"
+#import "ShowMessage.h"
 
 @interface TAauthenticateCell ()
 
@@ -69,26 +70,7 @@
 }
 - (void)chakan:(UIButton *)sender
 {
-    switch (sender.tag) {
-        case 0:
-        {
-            self.label1.text = @"wx10000001";
-        }
-            break;
-        case 1:
-        {
-            self.label2.text = @"QQ29282370";
-        }
-            break;
-        case 2:
-        {
-            self.label3.text = @"237093507057";
-        }
-            break;
-            
-        default:
-            break;
-    }
+    [ShowMessage showMessage:@"尚未添加认证信息"];
 }
 
 @end

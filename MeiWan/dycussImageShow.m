@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIView *vi = [[UIView alloc]initWithFrame:CGRectZero];
+    self.view.backgroundColor = [UIColor blackColor];
     [self.view addSubview:vi];
     
     [self.navigationController setNavigationBarHidden:YES];

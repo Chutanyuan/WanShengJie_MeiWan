@@ -213,6 +213,17 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
 
     [bottomView addSubview:yue];
     
+    NSDictionary *userInfo = [PersistenceManager getLoginUser];
+    NSString *thesame = [NSString stringWithFormat:@"%ld",[[userInfo objectForKey:@"id"]longValue]];
+    if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
+        liao.frame = CGRectMake(40, 10, dtScreenWidth-80, 30);
+        yue.hidden = YES;
+    }else{
+        yue.hidden = NO;
+        
+    }
+
+    
 }
 - (void)liaoMei
 {
@@ -250,7 +261,15 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (flag==1) {
-        return _array.count;
+        NSDictionary *userInfo = [PersistenceManager getLoginUser];
+        NSString *thesame = [NSString stringWithFormat:@"%ld",[[userInfo objectForKey:@"id"]longValue]];
+        if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
+            return _array.count-1;
+
+        }else{
+            return _array.count;
+        }
+
     }else if (flag==2){
         return _statusArray.count+1;
     }else if (flag==3){
@@ -287,16 +306,21 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (flag==1) {
-        UILabel * rightlabel = [[UILabel alloc]initWithFrame:CGRectMake(dtScreenWidth/2, 0, dtScreenWidth/2-20, 50)];
+        UILabel * rightlabel = [[UILabel alloc]init];
         rightlabel.textAlignment = NSTextAlignmentRight;
         rightlabel.font = [FontOutSystem fontWithFangZhengSize:15.0];
         rightlabel.textColor = [UIColor blackColor];
 
+        UILabel * textlabelOther = [[UILabel alloc]init];
+        textlabelOther.textAlignment = NSTextAlignmentRight;
+        textlabelOther.font = [FontOutSystem fontWithFangZhengSize:17.0];
+        textlabelOther.textColor = [CorlorTransform colorWithHexString:@"#d5d5d5"];
         
         UITableViewCell * ziliao = [tableView dequeueReusableCellWithIdentifier:@"ziliao"];
         if (!ziliao) {
             ziliao = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ziliao"];
             [ziliao addSubview:rightlabel];
+            [ziliao addSubview:textlabelOther];
         }
         if (indexPath.row==0) {
             ziliao.backgroundColor = [CorlorTransform colorWithHexString:@"#f6f6f6"];
@@ -313,7 +337,7 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
             }
             if (indexPath.row==1) {
                 if (self.headerImageView.biaoqian3.text != nil) {
-                    ziliao.textLabel.text = [NSString stringWithFormat:@"%@、%@、%@",self.headerImageView.biaoqian1.text,self.headerImageView.biaoqian2.text,self.headerImageView.biaoqian3.text];
+                    textlabelOther.text = [NSString stringWithFormat:@"%@、%@、%@",self.headerImageView.biaoqian1.text,self.headerImageView.biaoqian2.text,self.headerImageView.biaoqian3.text];
                     NSInteger a;
                     if (self.headerImageView.biaoqian1.tag<=self.headerImageView.biaoqian2.tag) {
                         
@@ -336,6 +360,7 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
                         NSRange range = [[changeText string]rangeOfString:[NSString stringWithFormat:@" %ld元/次",(long)a]];
                         [changeText addAttribute:NSForegroundColorAttributeName value:[CorlorTransform colorWithHexString:@"#ed5b5b"] range:range];
                         rightlabel.attributedText = changeText;
+                    
                     }else{
                         
                         NSString * textForRightLabel = [NSString stringWithFormat:@"最低 %ld元/小时",(long)a];
@@ -344,11 +369,11 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
                         [changeText addAttribute:NSForegroundColorAttributeName value:[CorlorTransform colorWithHexString:@"#ed5b5b"] range:range];
                         rightlabel.attributedText = changeText;
                     }
- 
+                    
                 }else{
                     if (self.headerImageView.biaoqian2.text!=nil)
                     {
-                        ziliao.textLabel.text = [NSString stringWithFormat:@"%@、%@",self.headerImageView.biaoqian1.text,self.headerImageView.biaoqian2.text];
+                        textlabelOther.text = [NSString stringWithFormat:@"%@、%@",self.headerImageView.biaoqian1.text,self.headerImageView.biaoqian2.text];
                         NSInteger a;
                         if (self.headerImageView.biaoqian1.tag<=self.headerImageView.biaoqian2.tag) {
                             
@@ -372,10 +397,9 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
                             [changeText addAttribute:NSForegroundColorAttributeName value:[CorlorTransform colorWithHexString:@"#ed5b5b"] range:range];
                             rightlabel.attributedText = changeText;
                         }
-
                     }else{
                         if (self.headerImageView.biaoqian1.text!=nil) {
-                            ziliao.textLabel.text = [NSString stringWithFormat:@"%@",self.headerImageView.biaoqian1.text];
+                            textlabelOther.text = [NSString stringWithFormat:@"%@",self.headerImageView.biaoqian1.text];
                             NSInteger a;
                             
                             a = self.headerImageView.biaoqian1.tag;
@@ -401,6 +425,10 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
                     }
                 }
                 
+                CGSize size_right = [rightlabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:rightlabel.font,NSFontAttributeName, nil]];
+                rightlabel.frame = CGRectMake(dtScreenWidth-10-size_right.width, 0, size_right.width, 50);
+                rightlabel.backgroundColor = [UIColor whiteColor];
+                textlabelOther.frame = CGRectMake(6, 0, dtScreenWidth-size_right.width-30, 50);
             }else{
                 ziliao.textLabel.text = _array[indexPath.row];
             }

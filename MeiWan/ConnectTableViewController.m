@@ -97,17 +97,13 @@
     NSString *thesame = [NSString stringWithFormat:@"%ld",[[userInfo objectForKey:@"id"]longValue]];
     int isAudit = [[userInfo objectForKey:@"isAudit"]intValue];
     if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
-        self.inviteMe.hidden = NO;
+        self.inviteMe.hidden = YES;
     }else{
-        if (![setting canOpen]) {
+        if (isAudit == 0) {
+            self.inviteMe.hidden = NO;
+        }else{
             self.inviteMe.hidden = YES;
         }
-        [setting getOpen];
-    }
-    if (isAudit == 0) {
-        self.inviteMe.hidden = NO;
-    }else{
-        self.inviteMe.hidden = YES;
     }
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
     
