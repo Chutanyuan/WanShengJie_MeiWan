@@ -328,6 +328,9 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
             ziliao.backgroundColor = [CorlorTransform colorWithHexString:@"#f6f6f6"];
             ziliao.textLabel.textColor = [CorlorTransform colorWithHexString:@"#d5d5d5"];
             ziliao.textLabel.text = @"Ta的资料";
+            
+            
+
         }else{
             if (indexPath.row%2==0) {
                 ziliao.backgroundColor = [CorlorTransform colorWithHexString:@"#e1e0e0"];
@@ -338,6 +341,14 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
                 ziliao.textLabel.textColor = [CorlorTransform colorWithHexString:@"#d5d5d5"];
             }
             if (indexPath.row==1) {
+                NSDictionary *userInfo = [PersistenceManager getLoginUser];
+                NSString *thesame = [NSString stringWithFormat:@"%ld",[[userInfo objectForKey:@"id"]longValue]];
+                
+                if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
+                    rightlabel.hidden = YES;
+                }else{
+                    rightlabel.hidden = NO;
+                }
                 if (self.headerImageView.biaoqian3.text != nil) {
                     textlabelOther.text = [NSString stringWithFormat:@"%@、%@、%@",self.headerImageView.biaoqian1.text,self.headerImageView.biaoqian2.text,self.headerImageView.biaoqian3.text];
                     NSInteger a;
@@ -431,14 +442,6 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
                 rightlabel.frame = CGRectMake(dtScreenWidth-10-size_right.width, 0, size_right.width, 50);
                 rightlabel.backgroundColor = [UIColor whiteColor];
                 textlabelOther.frame = CGRectMake(15, 0, dtScreenWidth-size_right.width-30, 50);
-               
-                NSDictionary *userInfo = [PersistenceManager getLoginUser];
-                NSString *thesame = [NSString stringWithFormat:@"%ld",[[userInfo objectForKey:@"id"]longValue]];
-                if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
-                    rightlabel.hidden = YES;
-                }else{
-                    rightlabel.hidden = NO;
-                }
             }else{
                 ziliao.textLabel.text = _array[indexPath.row];
             }
@@ -450,31 +453,45 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
                 }else{
                     rightlabel.text = [NSString stringWithFormat:@"%@cm",self.getData[@"height"]];
                 }
+                
+                CGSize size_right = [rightlabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:rightlabel.font,NSFontAttributeName, nil]];
+                rightlabel.frame = CGRectMake(dtScreenWidth-10-size_right.width, 0, size_right.width, 50);
             }else if (indexPath.row==3){
                 if ([self.getData[@"weight"] intValue]==0) {
                     rightlabel.text = @"未设置";
                 }else{
                     rightlabel.text = [NSString stringWithFormat:@"%@kg",self.getData[@"weight"]];
                 }
+                CGSize size_right = [rightlabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:rightlabel.font,NSFontAttributeName, nil]];
+                rightlabel.frame = CGRectMake(dtScreenWidth-10-size_right.width, 0, size_right.width, 50);
             }else if (indexPath.row==4){
                 if (self.getData[@"job"] == nil) {
                     rightlabel.text = @"未设置";
                 }else{
                     rightlabel.text = self.getData[@"job"];
                 }
+                CGSize size_right = [rightlabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:rightlabel.font,NSFontAttributeName, nil]];
+                rightlabel.frame = CGRectMake(dtScreenWidth-10-size_right.width, 0, size_right.width, 50);
             }else if (indexPath.row==5){
                 if (self.getData[@"xingzuo"] == nil) {
                     rightlabel.text = @"未设置";
                 }else{
                     rightlabel.text = self.getData[@"xingzuo"];
                 }
+                CGSize size_right = [rightlabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:rightlabel.font,NSFontAttributeName, nil]];
+                rightlabel.frame = CGRectMake(dtScreenWidth-10-size_right.width, 0, size_right.width, 50);
             }else if (indexPath.row==6){
                 rightlabel.text = self.getData[@"description"];
+                rightlabel.frame = CGRectMake(dtScreenWidth/2-10, 0, dtScreenWidth/2, 50);
             }else if (indexPath.row==7){
                 rightlabel.text = self.getData[@"location"];
+                CGSize size_right = [rightlabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:rightlabel.font,NSFontAttributeName, nil]];
+                rightlabel.frame = CGRectMake(dtScreenWidth-10-size_right.width, 0, size_right.width, 50);
             }else if (indexPath.row==8){
                 rightlabel.text  = [NSString stringWithFormat:@"%lu ➡️",(unsigned long)self.pinglunCount.count];
                 rightlabel.alpha = 0.7;
+                CGSize size_right = [rightlabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:rightlabel.font,NSFontAttributeName, nil]];
+                rightlabel.frame = CGRectMake(dtScreenWidth-10-size_right.width, 0, size_right.width, 50);
             }
             
         }
