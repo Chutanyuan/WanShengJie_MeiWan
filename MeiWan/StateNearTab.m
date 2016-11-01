@@ -27,19 +27,22 @@
 {
     MBProgressHUD * HUD;
 }
+
 @property (nonatomic,strong) MoveActionFrame *moveActionFrame;
 @property (nonatomic,strong) MoveAction *moveAction;
 @property (nonatomic,strong) NSMutableArray *myMoveArray;
 @property (nonatomic,assign) int stateCount;
 @property (nonatomic,assign) BOOL isDiscuss;
 @property (nonatomic,assign) NSInteger indexpathRow;
-//@property (nonatomic,assign) NSMutableArray *moveActionFrames;
+
 @end
 
 @implementation StateNearTab
 
 - (IBAction)addNewStatus:(id)sender {
+    
     [self performSegueWithIdentifier:@"newStatus" sender:nil];
+    
 }
 -(void)back
 {

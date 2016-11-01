@@ -322,6 +322,8 @@
 		2B5B7D1E1D38932500CF5354 /* PlagerinfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5B7D1D1D38932500CF5354 /* PlagerinfoViewController.m */; };
 		2B6D634B1D6043EF00B3E3BC /* pw_visible.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B6D63491D6043EF00B3E3BC /* pw_visible.png */; };
 		2B6D634D1D6045E600B3E3BC /* pw_hide.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B6D634C1D6045E600B3E3BC /* pw_hide.png */; };
+		2B79DA591DC8A30D00FCD3F2 /* StateAllController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B79DA581DC8A30D00FCD3F2 /* StateAllController.m */; };
+		2B79DA601DC8A5EE00FCD3F2 /* stateTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B79DA5F1DC8A5EE00FCD3F2 /* stateTitleView.m */; };
 		2B7E9F801D5D6F9100207CB7 /* findPeiWanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7E9F7F1D5D6F9100207CB7 /* findPeiWanCell.m */; };
 		2B7E9F821D5DAEC500207CB7 /* sharefenxiang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7E9F811D5DAEC500207CB7 /* sharefenxiang@2x.png */; };
 		2B7F4CAC1DB0D4B900A86D88 /* UIView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7F4CAB1DB0D4B900A86D88 /* UIView2.m */; };
@@ -1157,6 +1159,10 @@
 		2B5B7D1D1D38932500CF5354 /* PlagerinfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlagerinfoViewController.m; sourceTree = "<group>"; };
 		2B6D63491D6043EF00B3E3BC /* pw_visible.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pw_visible.png; path = ../pw_visible.png; sourceTree = "<group>"; };
 		2B6D634C1D6045E600B3E3BC /* pw_hide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pw_hide.png; path = ../pw_hide.png; sourceTree = "<group>"; };
+		2B79DA571DC8A30D00FCD3F2 /* StateAllController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateAllController.h; sourceTree = "<group>"; };
+		2B79DA581DC8A30D00FCD3F2 /* StateAllController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateAllController.m; sourceTree = "<group>"; };
+		2B79DA5E1DC8A5EE00FCD3F2 /* stateTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stateTitleView.h; sourceTree = "<group>"; };
+		2B79DA5F1DC8A5EE00FCD3F2 /* stateTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = stateTitleView.m; sourceTree = "<group>"; };
 		2B7E9F7E1D5D6F9100207CB7 /* findPeiWanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = findPeiWanCell.h; sourceTree = "<group>"; };
 		2B7E9F7F1D5D6F9100207CB7 /* findPeiWanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = findPeiWanCell.m; sourceTree = "<group>"; };
 		2B7E9F811D5DAEC500207CB7 /* sharefenxiang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharefenxiang@2x.png"; sourceTree = "<group>"; };
@@ -2263,6 +2269,7 @@
 		18ABFEDD1BF98864000F96FF /* 动态 */ = {
 			isa = PBXGroup;
 			children = (
+				2B79DA5A1DC8A31A00FCD3F2 /* 新版动态 */,
 				18ABFEDE1BF988B5000F96FF /* StateNearTab.h */,
 				18ABFEDF1BF988B5000F96FF /* StateNearTab.m */,
 				18A42E501C07F10900B1CBE3 /* DiscussView */,
@@ -3112,6 +3119,17 @@
 				2B28F1A41D82B14500EF5EFD /* 动画 */,
 			);
 			name = cell;
+			sourceTree = "<group>";
+		};
+		2B79DA5A1DC8A31A00FCD3F2 /* 新版动态 */ = {
+			isa = PBXGroup;
+			children = (
+				2B79DA571DC8A30D00FCD3F2 /* StateAllController.h */,
+				2B79DA581DC8A30D00FCD3F2 /* StateAllController.m */,
+				2B79DA5E1DC8A5EE00FCD3F2 /* stateTitleView.h */,
+				2B79DA5F1DC8A5EE00FCD3F2 /* stateTitleView.m */,
+			);
+			name = "新版动态";
 			sourceTree = "<group>";
 		};
 		2B7D0EA11D6BF942009B4278 /* 展示图片 */ = {
@@ -4930,6 +4948,8 @@
 				1820A7001BF47F12000E4C06 /* DiscussView.m in Sources */,
 				2BD3C6071D73DCC0008CFE23 /* EMSDWebImageDecoder.m in Sources */,
 				2BD3C5EE1D73DCC0008CFE23 /* MJRefreshAutoGifFooter.m in Sources */,
+				2B79DA591DC8A30D00FCD3F2 /* StateAllController.m in Sources */,
+				2B79DA601DC8A5EE00FCD3F2 /* stateTitleView.m in Sources */,
 				2B28F1991D8261A100EF5EFD /* bookChooseVC.m in Sources */,
 				18E579F21B7DDDB000771063 /* UIAlertView+AFNetworking.m in Sources */,
 				04B138A81BA07EAF00AAD93F /* DataSigner.m in Sources */,
