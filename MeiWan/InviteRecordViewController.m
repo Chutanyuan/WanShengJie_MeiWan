@@ -43,7 +43,7 @@
     self.reSvcount = 5;
     self.inSvcount = 5;
     
-    self.recordSv = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.lineOfBtn.frame.origin.y+2, self.view.bounds.size.width, self.view.bounds.size.height-self.lineOfBtn.frame.origin.y+2)];
+    self.recordSv = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.lineOfBtn.frame.origin.y+2+64, self.view.bounds.size.width, self.view.bounds.size.height-self.lineOfBtn.frame.origin.y+2)];
     self.recordSv.backgroundColor = [UIColor whiteColor];
     self.recordSv.contentSize  = CGSizeMake(self.recordSv.bounds.size.width*2, 0);
     self.recordSv.showsHorizontalScrollIndicator = NO;

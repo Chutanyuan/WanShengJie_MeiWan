@@ -269,6 +269,8 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
         }else{
             return _array.count;
         }
+        
+        return _array.count;
 
     }else if (flag==2){
         return _statusArray.count+1;
@@ -312,7 +314,7 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
         rightlabel.textColor = [UIColor blackColor];
 
         UILabel * textlabelOther = [[UILabel alloc]init];
-        textlabelOther.textAlignment = NSTextAlignmentRight;
+        textlabelOther.textAlignment = NSTextAlignmentLeft;
         textlabelOther.font = [FontOutSystem fontWithFangZhengSize:17.0];
         textlabelOther.textColor = [CorlorTransform colorWithHexString:@"#d5d5d5"];
         
@@ -428,7 +430,15 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
                 CGSize size_right = [rightlabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:rightlabel.font,NSFontAttributeName, nil]];
                 rightlabel.frame = CGRectMake(dtScreenWidth-10-size_right.width, 0, size_right.width, 50);
                 rightlabel.backgroundColor = [UIColor whiteColor];
-                textlabelOther.frame = CGRectMake(6, 0, dtScreenWidth-size_right.width-30, 50);
+                textlabelOther.frame = CGRectMake(15, 0, dtScreenWidth-size_right.width-30, 50);
+               
+                NSDictionary *userInfo = [PersistenceManager getLoginUser];
+                NSString *thesame = [NSString stringWithFormat:@"%ld",[[userInfo objectForKey:@"id"]longValue]];
+                if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
+                    rightlabel.hidden = YES;
+                }else{
+                    rightlabel.hidden = NO;
+                }
             }else{
                 ziliao.textLabel.text = _array[indexPath.row];
             }

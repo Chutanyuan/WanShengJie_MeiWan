@@ -23,7 +23,7 @@
 #import "MBProgressHUD.h"
 #import "WGS84TOGCJ02.h"
 #import "creatAlbum.h"
-
+#import "findFriendViewController.h"
 
 #define width_screen [UIScreen mainScreen].bounds.size.width
 
@@ -392,17 +392,23 @@
 #pragma mark - Search PeiWan
 //弹出玩家搜索页
 - (IBAction)search:(UIBarButtonItem *)sender {
-    PayInfo *pi = [[PayInfo alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-    pi.delegate = self;
-    pi.layer.masksToBounds = YES;
-    pi.layer.cornerRadius = 10.0f;
-    //NSLog(@"%@",pi.searchDic);
-    //NSLog(@"%f",self.view.bounds.size.width);
-    self.backView = [[UIView alloc]initWithFrame: [UIScreen mainScreen].bounds];
-    self.backView.backgroundColor = [UIColor blackColor];
-    self.backView.alpha = 0.2;
-    [[ShowMessage mainWindow]addSubview:self.backView];
-    [[ShowMessage mainWindow]addSubview:pi];
+//    PayInfo *pi = [[PayInfo alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+//    pi.delegate = self;
+//    pi.layer.masksToBounds = YES;
+//    pi.layer.cornerRadius = 10.0f;
+//    //NSLog(@"%@",pi.searchDic);
+//    //NSLog(@"%f",self.view.bounds.size.width);
+//    self.backView = [[UIView alloc]initWithFrame: [UIScreen mainScreen].bounds];
+//    self.backView.backgroundColor = [UIColor blackColor];
+//    self.backView.alpha = 0.2;
+//    [[ShowMessage mainWindow]addSubview:self.backView];
+//    [[ShowMessage mainWindow]addSubview:pi];
+
+    findFriendViewController * controller = [[findFriendViewController alloc]init];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.title = @"搜索好友";
+    [self.navigationController pushViewController:controller animated:YES];
+    
 }
 #pragma mark - superviewdelegate
 -(void)moveBackview{

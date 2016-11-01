@@ -60,7 +60,7 @@
             if (status==0) {
                 [PersistenceManager setLoginUser:json[@"entity"]];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"finish_zodiac" object:sender.titleLabel.text];
-//                [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
                 
             }
         }

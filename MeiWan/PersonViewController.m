@@ -62,10 +62,8 @@
     [self loadUserData];
     if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
         self.cellTitleArray =@[
-                               @{@"title":@"我要出售时间",@"image":@"chushou"},
+                               @{@"title":@"我要申请标签",@"image":@"chushou"},
                                @{@"title":@"搜索好友",@"image":@"qianbao"},
-                               @{@"title":@"记录中心",@"image":@"jilu"},
-                               @{@"title":@"公会管理",@"image":@"gonghui"},
                                @{@"title":@"设置",@"image":@"shezhi"},
                                @{@"title":@"分享",@"image":@"fenxinag2"}
                                ];
@@ -171,9 +169,6 @@
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-//        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(10, cell.frame.size.height-1, dtScreenWidth-10, 1)];
-//        label.backgroundColor = [UIColor grayColor];
-//        [cell.contentView addSubview:label];
         UIImageView * jiantou = [[UIImageView alloc]initWithFrame:CGRectMake(dtScreenWidth-35, cell.frame.size.height/2-7.5, 15, 15)];
         jiantou.image = [UIImage imageNamed:@"jiantou"];
         [cell.contentView addSubview:jiantou];
@@ -215,8 +210,10 @@
     self.headerImage = headerImage;
     [view addSubview:headerImage];
     
-    UIImageView * bianji = [[UIImageView alloc]initWithFrame:CGRectMake(dtScreenWidth-10-20, 50, 20, 20)];
+    UIImageView * bianji = [[UIImageView alloc]initWithFrame:CGRectMake(dtScreenWidth-10-60, 50, 60, 60)];
     bianji.image = [UIImage imageNamed:@"bianji"];
+    bianji.contentMode = UIViewContentModeRight;
+    bianji.clipsToBounds = YES;
     UITapGestureRecognizer * tapGestureBianji = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(EditUserMessage:)];
     bianji.userInteractionEnabled = YES;
     [bianji addGestureRecognizer:tapGestureBianji];
@@ -335,15 +332,19 @@
 
     }else if (indexPath.row==2){
         if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
-            UIViewController * controller = [[UIViewController alloc]init];
-            controller.hidesBottomBarWhenPushed = YES;
-            controller.title = @"记录中心";
-            [self.navigationController pushViewController:controller animated:YES];
+            personEditViewController * personal = [[personEditViewController alloc]init];
+            personal.hidesBottomBarWhenPushed = YES;
+            personal.title = @"个人设置";
+            [self.navigationController pushViewController:personal animated:YES];
         }else{
             [self performSegueWithIdentifier:@"invite" sender:nil];
         }
     }else if (indexPath.row==3){
-        [self performSegueWithIdentifier:@"gonghuiguanli" sender:nil];
+        if ([thesame isEqualToString:@"100000"] || [thesame isEqualToString:@"100001"]) {
+            [self showMessageAlert:@"分享" image:self.headerImage.image];
+        }else{
+            [self performSegueWithIdentifier:@"gonghuiguanli" sender:nil];
+        }
         
     }else if (indexPath.row==4){
         /** 设置 */
