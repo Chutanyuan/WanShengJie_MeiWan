@@ -609,7 +609,7 @@
     self.showAlphaView = alphaview;
     UIView * view = [[UIView alloc]init];
     view.center = CGPointMake(dtScreenWidth/2, dtScreenHeight/2);
-    view.bounds = CGRectMake(0, 0, dtScreenWidth-80, 200);
+    view.bounds = CGRectMake(0, 0, dtScreenWidth-40, 200);
     view.backgroundColor = [UIColor whiteColor];
     view.layer.cornerRadius = 5;
     view.clipsToBounds = YES;
@@ -650,8 +650,8 @@
     }
     [sure addTarget:self action:@selector(sureButton:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:sure];
-
 }
+
 - (void)sureButton:(UIButton *)sender
 {
     self.showAlphaView.alpha = 0;
@@ -674,6 +674,7 @@
         fov.hidesBottomBarWhenPushed = YES;
     }
 }
+
 
 
 @end

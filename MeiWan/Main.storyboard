@@ -1378,7 +1378,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HvD-9s-yEk" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="1" title="附近" image="near.png" selectedImage="near2.png" id="u5h-b4-iSS"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0eo-S0-Mif">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="0eo-S0-Mif">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2237,7 +2237,7 @@
             <objects>
                 <navigationController id="bNO-FH-4W7" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="动态" image="dongtai2.png" selectedImage="dongtai.png" id="P90-ki-ru6"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FRu-aw-pGO">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FRu-aw-pGO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2257,7 +2257,7 @@
                 <navigationController storyboardIdentifier="nav" automaticallyAdjustsScrollViewInsets="NO" id="NVb-KD-vB3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="2" title="消息" image="information.png" selectedImage="information2.png" id="p8P-Yw-8sr"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nZP-0o-tq5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nZP-0o-tq5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2278,7 +2278,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bRl-bz-4Ij" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="3" title="个人" image="personal.png" selectedImage="personal2.png" id="W2u-ad-JVs"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4rz-MB-Fsw">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="4rz-MB-Fsw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2397,7 +2397,7 @@
         <!--公会中心-->
         <scene sceneID="Byn-uA-ilx">
             <objects>
-                <viewController id="f7r-ze-Stv" customClass="guildCenterViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="f7r-ze-Stv" customClass="guildCenterViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="au8-ML-p5M"/>
                         <viewControllerLayoutGuide type="bottom" id="YJA-k5-O9W"/>
@@ -3875,7 +3875,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Uaj-XS-CqX" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="amf-Dx-CKK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="amf-Dx-CKK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -10,7 +10,7 @@
 #define dtScreenWidth            ([UIScreen mainScreen].bounds.size.width)
 #define dtScreenHeight           ([UIScreen mainScreen].bounds.size.height)
 #define dtScreenHeightScale      (dtScreenHeight / 480.0)
-
+#define dtScreenWidthScale      (dtScreenWidth / 320.0)
 /*应用程序宽高*/
 #define dtAppWidth               ([[UIScreen mainScreen] applicationFrame].size.width)
 #define dtAppHeight              ([[UIScreen mainScreen] applicationFrame].size.height)
