@@ -127,7 +127,7 @@
     CGSize size_show = [showtext.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:showtext.font,NSFontAttributeName, nil]];
    
     if (IS_IPHONE_4_OR_LESS) {
-        showtext.frame = CGRectMake(dtScreenWidth/2-size_show.width/2-size_show.height/2, dtScreenHeight-size_show.height*2, size_show.width, size_show.height);
+        [self showMessageAlert:@"温馨提示"];
     }else{
         showtext.frame = CGRectMake(dtScreenWidth/2-size_show.width/2-size_show.height/2, dtScreenHeight-80, size_show.width, size_show.height);
     }
@@ -949,6 +949,8 @@
         UIAlertAction * sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             if ([message isEqualToString:@"支付成功"]) {
                 [self.navigationController popViewControllerAnimated:YES];
+            }else if ([message isEqualToString:@"温馨提示"]){
+                [self performSegueWithIdentifier:@"labelPush" sender:nil];
             }else{
                 
             }
