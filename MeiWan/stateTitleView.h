@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface stateTitleView : UINavigationBar
+@protocol stateTitleViewDelegate <NSObject>
+
+- (void)buttonclickAction:(UIButton *)sender;
+
+@end
+
+@interface stateTitleView : UIView
+
+@property(nonatomic,weak)id<stateTitleViewDelegate>delegate;
 
 @end

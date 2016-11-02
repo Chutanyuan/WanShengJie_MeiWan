@@ -52,9 +52,11 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
     HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     HUD.labelText = @"加载中";
     HUD.delegate = self;
+    
     [HUD showAnimated:YES whileExecutingBlock:^{
         //NSLog(@"什么时候调用");
     }];

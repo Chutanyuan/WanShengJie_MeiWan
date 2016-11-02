@@ -288,7 +288,7 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
         if (flag==1) {
              return 50;
         }else if (flag==2){
-            DetailWithPlayerTableViewCell * cell = [self tableView:self.tableview cellForRowAtIndexPath:indexPath];
+            UITableViewCell * cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
             return cell.frame.size.height;
         }else if (flag==3){
             return 70;

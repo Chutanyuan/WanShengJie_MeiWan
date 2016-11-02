@@ -336,6 +336,8 @@
 		2BB14C061D728B0D00F6425D /* ConversationListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB14C021D728B0D00F6425D /* ConversationListController.m */; };
 		2BB14C071D728B0D00F6425D /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB14C051D728B0D00F6425D /* ChatViewController.m */; };
 		2BB4D54D1D235B4D0004BFA9 /* blackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB4D54C1D235B4D0004BFA9 /* blackModel.m */; };
+		2BC844CC1DC9CDDE0006ED54 /* StateNewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC844CB1DC9CDDE0006ED54 /* StateNewTableViewCell.m */; };
+		2BC844CF1DC9E79E0006ED54 /* user.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC844CE1DC9E79E0006ED54 /* user.m */; };
 		2BCE86231D77DB2E007B0358 /* EMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE86101D77DB2E007B0358 /* EMAlertView.m */; };
 		2BCE86241D77DB2E007B0358 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCE86121D77DB2E007B0358 /* Bolts.framework */; };
 		2BCE86251D77DB2E007B0358 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCE86131D77DB2E007B0358 /* Parse.framework */; };
@@ -1224,6 +1226,10 @@
 		2BB14C051D728B0D00F6425D /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		2BB4D54B1D235B4D0004BFA9 /* blackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blackModel.h; sourceTree = "<group>"; };
 		2BB4D54C1D235B4D0004BFA9 /* blackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = blackModel.m; sourceTree = "<group>"; };
+		2BC844CA1DC9CDDE0006ED54 /* StateNewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateNewTableViewCell.h; sourceTree = "<group>"; };
+		2BC844CB1DC9CDDE0006ED54 /* StateNewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateNewTableViewCell.m; sourceTree = "<group>"; };
+		2BC844CD1DC9E79E0006ED54 /* user.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user.h; sourceTree = "<group>"; };
+		2BC844CE1DC9E79E0006ED54 /* user.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = user.m; sourceTree = "<group>"; };
 		2BCE860F1D77DB2E007B0358 /* EMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAlertView.h; sourceTree = "<group>"; };
 		2BCE86101D77DB2E007B0358 /* EMAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAlertView.m; sourceTree = "<group>"; };
 		2BCE86121D77DB2E007B0358 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -2344,6 +2350,8 @@
 				04B138D01BA08B7F00AAD93F /* AliHelper.m */,
 				18F1CC141B952BCD003EF78A /* registInfo.h */,
 				18F1CC151B952BD4003EF78A /* registInfo.m */,
+				2BC844CD1DC9E79E0006ED54 /* user.h */,
+				2BC844CE1DC9E79E0006ED54 /* user.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -3126,8 +3134,8 @@
 			children = (
 				2B79DA571DC8A30D00FCD3F2 /* StateAllController.h */,
 				2B79DA581DC8A30D00FCD3F2 /* StateAllController.m */,
-				2B79DA5E1DC8A5EE00FCD3F2 /* stateTitleView.h */,
-				2B79DA5F1DC8A5EE00FCD3F2 /* stateTitleView.m */,
+				2BC844C81DC9CD7D0006ED54 /* 动态cell */,
+				2BC844C91DC9CD980006ED54 /* 动态导航 */,
 			);
 			name = "新版动态";
 			sourceTree = "<group>";
@@ -3280,6 +3288,24 @@
 				2BD366B51DBF5799001DE31B /* XYView.xib */,
 			);
 			name = "键盘";
+			sourceTree = "<group>";
+		};
+		2BC844C81DC9CD7D0006ED54 /* 动态cell */ = {
+			isa = PBXGroup;
+			children = (
+				2BC844CA1DC9CDDE0006ED54 /* StateNewTableViewCell.h */,
+				2BC844CB1DC9CDDE0006ED54 /* StateNewTableViewCell.m */,
+			);
+			name = "动态cell";
+			sourceTree = "<group>";
+		};
+		2BC844C91DC9CD980006ED54 /* 动态导航 */ = {
+			isa = PBXGroup;
+			children = (
+				2B79DA5E1DC8A5EE00FCD3F2 /* stateTitleView.h */,
+				2B79DA5F1DC8A5EE00FCD3F2 /* stateTitleView.m */,
+			);
+			name = "动态导航";
 			sourceTree = "<group>";
 		};
 		2BCE860D1D77DB2E007B0358 /* 3rdpartyOne */ = {
@@ -4952,6 +4978,7 @@
 				2B79DA601DC8A5EE00FCD3F2 /* stateTitleView.m in Sources */,
 				2B28F1991D8261A100EF5EFD /* bookChooseVC.m in Sources */,
 				18E579F21B7DDDB000771063 /* UIAlertView+AFNetworking.m in Sources */,
+				2BC844CF1DC9E79E0006ED54 /* user.m in Sources */,
 				04B138A81BA07EAF00AAD93F /* DataSigner.m in Sources */,
 				2BDD84EE1DAE36EF00541F5D /* photosView.m in Sources */,
 				2BE39E671D7297F100CC3F0F /* ChatroomDetailViewController.m in Sources */,
@@ -4990,6 +5017,7 @@
 				2BD3C6241D73DCC0008CFE23 /* EaseConversationModel.m in Sources */,
 				18888E831BA3F11800F7FEEE /* StateTableViewController.m in Sources */,
 				04B138A91BA07EAF00AAD93F /* DataVerifier.m in Sources */,
+				2BC844CC1DC9CDDE0006ED54 /* StateNewTableViewCell.m in Sources */,
 				18CC8EE11BC39CE1000281CE /* MultipartFormData.swift in Sources */,
 				2BF43CE71D56D92C00C5B6C6 /* daRenCell.m in Sources */,
 				18CC8EE91BC39CE1000281CE /* Upload.swift in Sources */,

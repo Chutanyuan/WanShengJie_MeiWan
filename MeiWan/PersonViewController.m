@@ -228,7 +228,7 @@
     for (int i = 0; i<3; i++) {
         UIImageView * threeImage = [[UIImageView alloc]initWithFrame:CGRectMake((dtScreenWidth/6-12)+i*(dtScreenWidth/3), 138, 24, 24)];
         if (i==0) {
-            threeImage.image = [UIImage imageNamed:@"dongtai"];
+            threeImage.image = [UIImage imageNamed:@"dongtailiang"];
         }else if (i==1){
             threeImage.image = [UIImage imageNamed:@"fensi"];
         }else{
