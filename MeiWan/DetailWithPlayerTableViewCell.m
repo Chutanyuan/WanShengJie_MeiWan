@@ -76,8 +76,6 @@
     _contentText.text = detailDictionary[@"content"];
     _contentText.font = [FontOutSystem fontWithFangZhengSize:15.0];
     CGRect frame = [self frame];
-    _contentText.text = detailDictionary[@"content"];
-    _contentText.font = [FontOutSystem fontWithFangZhengSize:15.0];
     CGSize size = CGSizeMake(dtScreenWidth-(self.dateLabel.frame.origin.x+self.dateLabel.frame.size.width+10)-10, 1000);
     CGSize labelsize = [self.contentText.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:_contentText.font,NSFontAttributeName, nil] context:nil].size;
     _contentText.frame =  CGRectMake(self.dateLabel.frame.origin.x+self.dateLabel.frame.size.width+10, 10, labelsize.width, labelsize.height);

@@ -1901,6 +1901,8 @@
 			children = (
 				2B5B7D1C1D38932500CF5354 /* PlagerinfoViewController.h */,
 				2B5B7D1D1D38932500CF5354 /* PlagerinfoViewController.m */,
+				2B8A7B7A1DBC8B0600E4BAEE /* DetailWithPlayerTableViewCell.h */,
+				2B8A7B7B1DBC8B0600E4BAEE /* DetailWithPlayerTableViewCell.m */,
 				2BF897771DC32BCF0023B209 /* 评价界面 */,
 				2BD712F71DB77127002ACCCF /* 认证cell */,
 				2B7D0EA11D6BF942009B4278 /* 展示图片 */,
@@ -3983,8 +3985,6 @@
 			children = (
 				2BD712F81DB771D8002ACCCF /* TAauthenticateCell.h */,
 				2BD712F91DB771D8002ACCCF /* TAauthenticateCell.m */,
-				2B8A7B7A1DBC8B0600E4BAEE /* DetailWithPlayerTableViewCell.h */,
-				2B8A7B7B1DBC8B0600E4BAEE /* DetailWithPlayerTableViewCell.m */,
 			);
 			name = "认证cell";
 			sourceTree = "<group>";

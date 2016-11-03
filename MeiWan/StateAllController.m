@@ -55,7 +55,8 @@
     [self findStatesAroundOffset:[NSNumber numberWithInt:offsets] limit:[NSNumber numberWithInt:limit_num]];
     tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [tableview.mj_header beginRefreshing];
-       
+        offsets = 0;
+        [self.dataArray removeAllObjects];
         [self findStatesAroundOffset:[NSNumber numberWithInt:offsets] limit:[NSNumber numberWithInt:limit_num]];
         
     }];
@@ -76,14 +77,22 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StateNewTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    NSString *CellIdentifier = [NSString stringWithFormat:@"CellIdentifier%ld",(long)indexPath.row];
+    StateNewTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[StateNewTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[StateNewTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    cell.scrollview.delegate = self;
+    [cell.imageview removeFromSuperview];
+
     cell.UserMessage = self.dataArray[indexPath.row];
+
     return cell;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 -(void)buttonclickAction:(UIButton *)sender
 {
     if ([sender.titleLabel.text isEqualToString:@"最新"]) {
@@ -111,18 +120,19 @@
         if (statues==0) {
             if (intoffset==0) {
                 
-                [self.dataArray removeAllObjects];
-                [self.dataArray addObjectsFromArray:json[@"entity"]];
+                self.dataArray = json[@"entity"];
+                [tableview reloadData];
                 [tableview.mj_header endRefreshing];
                 [HUD hide:YES afterDelay:0.3];
                 
             }else{
                 
                 [self.dataArray addObjectsFromArray:json[@"entity"]];
+                [tableview reloadData];
                 [tableview.mj_footer endRefreshing];
 
             }
-            [tableview reloadData];
+
         }else if (statues==1){
             [self loginPush];
         }
@@ -134,5 +144,15 @@
     LoginViewController *lv = [self.storyboard instantiateViewControllerWithIdentifier:@"login"];
     lv.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:lv animated:YES];
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if([scrollView  isKindOfClass:[UITableView class]]) {
+        NSLog(@"------是列表---");
+        
+    }else{
+        
+        NSLog(@"------是滚动试图----");
+    }
 }
 @end

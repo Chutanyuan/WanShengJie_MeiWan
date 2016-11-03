@@ -12,4 +12,7 @@
 
 @property(nonatomic,strong)NSDictionary * UserMessage;
 
+@property(nonatomic,strong)UIImageView * imageview;
+@property(nonatomic,strong)UIScrollView * scrollview;
+
 @end
