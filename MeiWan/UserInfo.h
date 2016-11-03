@@ -44,6 +44,7 @@
 @property(nonatomic,strong) NSMutableArray *userTimeTags;
 @property(nonatomic,assign) int hasUnion;//是否拥有工会
 @property(nonatomic,assign) int canCreateUnion;//是否可以创建工会
+@property(nonatomic,assign) int level;
 
 -(id)initWithDictionary:(NSDictionary*)dictionary;
 

@@ -124,12 +124,27 @@
     }
     
    
+    _lookNum.font = [FontOutSystem fontWithFangZhengSize:14.0];
+    if ([UserMessage objectForKey:@"user"][@"unionLevel"]!=nil) {
+        _lookNum.text = [NSString stringWithFormat:@"%@级公会会长",UserMessage[@"user"][@"unionLevel"]];
+        _lookNum.textColor = [CorlorTransform colorWithHexString:@"#FF3102"];
+    }else{
+        if (userinfo.isAudit==1) {
+            if (userinfo.level==0) {
+                userinfo.level=1;
+            }
+            _lookNum.text = [NSString stringWithFormat:@"%d级达人",userinfo.level];
+            _lookNum.textColor = [CorlorTransform colorWithHexString:@"#F8C027"];
+        }else{
+            _lookNum.text = @"普通用户";
+            _lookNum.textColor = [CorlorTransform colorWithHexString:@"#5E7F99"];
+        }
+
+    }
+    
     CGSize size_lookNum = [self.lookNum.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:self.lookNum.font,NSFontAttributeName, nil]];
     self.lookNum.frame = CGRectMake(_nickname.frame.origin.x, _nickname.frame.origin.y+size_nickname.height+5, size_lookNum.width, size_lookNum.height);
-    _lookNum.font = [FontOutSystem fontWithFangZhengSize:14.0];
-    _lookNum.textColor = [CorlorTransform colorWithHexString:@"#C8D2D2"];
-    _lookNum.text = [NSString stringWithFormat:@"浏览%@次",UserMessage[@"count"]];
-    
+
     _time.text = [DateTool getTimeDescription:[UserMessage[@"createTime"] doubleValue]];
     _time.font = [FontOutSystem fontWithFangZhengSize:12.0];
 
