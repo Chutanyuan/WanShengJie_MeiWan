@@ -220,6 +220,27 @@
     //设置tabbarItem图片
     NSArray *items = self.tabBarController.tabBar.items;
     UITabBarItem *homeItem = items[0];
+    self.tabBarController.tabBar.translucent = false;
+    self.tabBarController.tabBar.tintColor = [UIColor whiteColor];
+    
+    CGRect rect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width);
+    
+    UIGraphicsBeginImageContext(rect.size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [[UIColor clearColor] CGColor]);
+    
+    CGContextFillRect(context, rect);
+    
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    [self.tabBarController.tabBar setBackgroundImage:img];
+    
+    [self.tabBarController.tabBar setShadowImage:img];
+    
     [homeItem setTitleTextAttributes:[NSDictionary dictionaryWithObject:[CorlorTransform colorWithHexString:@"78cdf8"] forKey:NSForegroundColorAttributeName] forState:UIControlStateSelected];
     homeItem.image = [[UIImage imageNamed:@"near@2x"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     homeItem.selectedImage = [[UIImage imageNamed:@"near2@2x"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -236,7 +257,6 @@
     
     
     UITabBarItem *chatItem = items[3];
-    //chatItem.imageInsets = UIEdgeInsetsMake(6,6,6, 6);
     [chatItem setTitleTextAttributes:[NSDictionary dictionaryWithObject:[CorlorTransform colorWithHexString:@"78cdf8"] forKey:NSForegroundColorAttributeName] forState:UIControlStateSelected];
     
     
@@ -246,11 +266,10 @@
     
     
     UITabBarItem *personItem = items[4];
-    //personItem.imageInsets = UIEdgeInsetsMake(6,6,6,6);
     [personItem setTitleTextAttributes:[NSDictionary dictionaryWithObject:[CorlorTransform colorWithHexString:@"78cdf8"] forKey:NSForegroundColorAttributeName] forState:UIControlStateSelected];
     
     personItem.image = [[UIImage imageNamed:@"personal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    personItem.selectedImage = [[UIImage imageNamed:@"personal2"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    personItem.selectedImage = [[UIImage imageNamed:@"personal2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
 #pragma mark - Set up Refresh

@@ -671,9 +671,11 @@ static NSString *const kMXCellIdentifer = @"kMXCellIdentifer";
     lv.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:lv animated:YES];
 }
--(void)KeyBoardLoadWithUserid:(double)userID statusID:(double)statusid
+-(void)KeyBoardLoadWithUserid:(double)userID statusID:(double)statusid dictionary:(NSDictionary *)dictioary
 {
-    
+    StateOneViewController * oneMessage = [[StateOneViewController alloc]init];
+    oneMessage.stateMessage = dictioary;
+    [self.navigationController pushViewController:oneMessage animated:YES];
 }
 /** 展示图片 */
 -(void)touchUpInsidImageView:(NSMutableArray *)photos PhotosTag:(NSInteger)PhotosTag

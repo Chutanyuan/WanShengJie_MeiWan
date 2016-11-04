@@ -2563,7 +2563,6 @@
 				18F359DC1B7AFB07005E3838 /* ExploitsTableViewController.m */,
 				18EB4E4E1B8081C5000AE087 /* AssesserInfoViewController.h */,
 				18EB4E4F1B8081C5000AE087 /* AssesserInfoViewController.m */,
-				2BD366B21DBF4C3F001DE31B /* 单条动态 */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -2620,10 +2619,8 @@
 				27ADB8321CFEC50F00F11453 /* dongtai2@2x.png */,
 				27ADB8331CFEC50F00F11453 /* information@2x.png */,
 				27ADB8341CFEC50F00F11453 /* information2@2x.png */,
-				27ADB8371CFEC50F00F11453 /* personal2@2x.png */,
 				27ADB8381CFEC50F00F11453 /* shouye@2x.png */,
 				27ADB8391CFEC50F00F11453 /* shouye2@2x.png */,
-				27ADB82D1CFEBD5F00F11453 /* personal@2x.png */,
 				27ADB82E1CFEBD5F00F11453 /* Profile.png */,
 				27D416031CFD8ADB00F4C7BA /* searchIcon@2x.png */,
 				27D416041CFD8ADB00F4C7BA /* searchIcon2@2x.png */,
@@ -2705,6 +2702,8 @@
 				27CA5A2D1CEEACCB00CC6956 /* wangzhe.png */,
 				27CA5A2E1CEEACCB00CC6956 /* yuanjiao-ju-xing.png */,
 				27CA5A2F1CEEACCB00CC6956 /* zuanshi.png */,
+				27ADB8371CFEC50F00F11453 /* personal2@2x.png */,
+				27ADB82D1CFEBD5F00F11453 /* personal@2x.png */,
 			);
 			path = Picture;
 			sourceTree = "<group>";
@@ -3137,6 +3136,7 @@
 				2B79DA571DC8A30D00FCD3F2 /* StateAllController.h */,
 				2B79DA581DC8A30D00FCD3F2 /* StateAllController.m */,
 				2BC844C81DC9CD7D0006ED54 /* 动态cell */,
+				2BD366B21DBF4C3F001DE31B /* 单条动态 */,
 				2BC844C91DC9CD980006ED54 /* 动态导航 */,
 			);
 			name = "新版动态";

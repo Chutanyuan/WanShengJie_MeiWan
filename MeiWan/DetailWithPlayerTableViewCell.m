@@ -27,6 +27,7 @@
 @property(nonatomic,strong)UIButton * fenxiang;
 
 @property(nonatomic,strong)UILabel * likelabel;
+@property(nonatomic,strong)NSDictionary * userStateMessage;
 
 @end
 
@@ -35,6 +36,9 @@
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+       
+        self.userStateMessage = [[NSDictionary alloc]init];
+        
         self.statePhotots = [[NSMutableArray alloc]initWithCapacity:0];
         self.contentText = [[UILabel alloc]init];
         self.contentText.numberOfLines = 0;
@@ -69,6 +73,7 @@
 -(void)setDetailDictionary:(NSDictionary *)detailDictionary
 {
     NSLog(@"%@",detailDictionary);
+    self.userStateMessage = detailDictionary;
     self.statePhotots = detailDictionary[@"statePhotos"];
     [self.statePhotots removeObject:[NSNull null]];
     int height_photos;
@@ -303,7 +308,7 @@
 }
 - (void)pinglunClick:(UIButton *)sender
 {
-    [self.delegate KeyBoardLoadWithUserid:userid statusID:stateid];
+    [self.delegate KeyBoardLoadWithUserid:userid statusID:stateid dictionary:self.userStateMessage];
 }
 - (void)photosTapGesture:(UITapGestureRecognizer *)gesture
 {

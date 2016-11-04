@@ -9,9 +9,16 @@
 #import "StateNewTableViewCell.h"
 #import "UserInfo.h"
 #import "MeiWan-Swift.h"
+#import "ShowMessage.h"
+
 
 @interface StateNewTableViewCell ()
-
+{
+    double userid;
+    double stateid;
+    int touchCount;
+    int unlikeTouchCount;
+}
 @property(nonatomic,strong)NSMutableArray * statePhotots;
 @property(nonatomic,strong)UIImageView * headerImageView;
 @property(nonatomic,strong)UILabel * nickname;
@@ -26,7 +33,7 @@
 @property(nonatomic,strong)UILabel * zanNum;
 @property(nonatomic,strong)UILabel * pinglunNum;
 @property(nonatomic,strong)UITextField * textfiled;
-
+@property(nonatomic,strong)NSDictionary * selectDictionary;
 @end
 
 @implementation StateNewTableViewCell
@@ -36,7 +43,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         _statePhotots = [[NSMutableArray alloc]initWithCapacity:0];
-        
+        _selectDictionary = [[NSDictionary alloc]init];
         self.headerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
         self.headerImageView.contentMode = UIViewContentModeScaleAspectFit;
         self.headerImageView.clipsToBounds = YES;
@@ -93,9 +100,12 @@
 -(void)setUserMessage:(NSDictionary *)UserMessage
 {
     NSLog(@"%@",UserMessage);
-
+    _selectDictionary = UserMessage;
     NSURL * url2 = [NSURL URLWithString:[NSString stringWithFormat:@"%@!1",UserMessage[@"user"][@"headUrl"]]];
     [_headerImageView sd_setImageWithURL:url2 placeholderImage:nil];
+    UITapGestureRecognizer * headerImageTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(headerImageViewTapGes:)];
+    _headerImageView.userInteractionEnabled = YES;
+    [_headerImageView addGestureRecognizer:headerImageTap];
     UserInfo * userinfo = [[UserInfo alloc]initWithDictionary:UserMessage[@"user"]];
     _nickname.text = userinfo.nickname;
     _nickname.font = [FontOutSystem fontWithFangZhengSize:14];
@@ -134,6 +144,7 @@
                 userinfo.level=1;
             }
             _lookNum.text = [NSString stringWithFormat:@"%d级达人",userinfo.level];
+            
             _lookNum.textColor = [CorlorTransform colorWithHexString:@"#F8C027"];
         }else{
             _lookNum.text = @"普通用户";
@@ -195,8 +206,11 @@
         _imageview = [[UIImageView alloc]initWithFrame:CGRectMake(_scrollview.frame.size.height*idx, 0, _scrollview.frame.size.height-2.5, _scrollview.frame.size.height)];
         _imageview.contentMode = UIViewContentModeScaleAspectFill;
         _imageview.clipsToBounds = YES;
+        _imageview.userInteractionEnabled = YES;
+        _imageview.tag = idx;
         [_imageview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@!1",obj]]];
-
+        UITapGestureRecognizer * tapges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(photosTapGesture:)];
+        [self.imageview addGestureRecognizer:tapges];
         [_scrollview addSubview:_imageview];
         
     }];
@@ -204,6 +218,11 @@
     frame.size.height = frame.size.height+30;
     self.frame = frame;
 
+    
+    stateid = [UserMessage[@"id"] doubleValue];
+    userid = [UserMessage[@"userId"] doubleValue];
+
+    
     _pinglun.frame = CGRectMake(dtScreenWidth-10-20-5-10, frame.size.height-30, 20, 20);
     [_pinglun setImage:[UIImage imageNamed:@"peiwan_discuss"] forState:UIControlStateNormal];
     [_pinglun addTarget:self action:@selector(pinglunClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -227,12 +246,117 @@
     _zanNum.frame = CGRectMake(_zan.frame.origin.x+_zan.frame.size.width+5, _zan.frame.origin.y, 10, 20);
     [_zan addTarget:self action:@selector(zanClike:) forControlEvents:UIControlEventTouchUpInside];
 }
+- (void)headerImageViewTapGes:(UITapGestureRecognizer *)gesture
+{
+    [self.delegate headerImageViewTapGes:self.selectDictionary];
+}
+- (void)photosTapGesture:(UITapGestureRecognizer *)gesture
+{
+    UIImageView * photo = (UIImageView *)[gesture view];
+    [self.delegate touchUpInsidImageView:self.statePhotots PhotosTag:photo.tag];
+}
 - (void)pinglunClick:(UIButton *)sender
 {
-    
+    [self.delegate PinglunClickPushWithUserID:userid StateID:stateid Dictionary:self.selectDictionary];
 }
 - (void)zanClike:(UIButton *)sender
 {
-    
+    NSString * session = [PersistenceManager getLoginSession];
+    NSNumber * userID = [NSNumber numberWithDouble:userid];
+    NSNumber * stateID = [NSNumber numberWithDouble:stateid];
+    if (sender.tag==0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            sender.bounds = CGRectMake(0, 0, 30, 30);
+        } completion:^(BOOL finished) {
+            if (finished == YES) {
+                sender.bounds = CGRectMake(0, 0, 20, 20);
+            }
+        }];
+        touchCount++;
+        if (touchCount%2==1) {
+            [UserConnector likeUserState:session toId:userID stateId:stateID receiver:^(NSData * _Nullable data, NSError * _Nullable error) {
+                if (!error) {
+                    SBJsonParser * parser = [[SBJsonParser alloc]init];
+                    NSDictionary * json = [parser objectWithData:data];
+                    int status;
+                    status = [json[@"status"] intValue];
+                    if (status==0) {
+                        [sender setImage:[UIImage imageNamed:@"peiwan_praise1"] forState:UIControlStateNormal];
+                        int textlike = [self.zanNum.text intValue];
+                        self.zanNum.text = [NSString stringWithFormat:@"%d",textlike+1];
+                        self.zanNum.textColor = [CorlorTransform colorWithHexString:@"#26A3E5"];
+                    }
+                }else{
+                    [ShowMessage showMessage:@"服务器未响应"];
+                }
+            }];
+        }else{
+            [UserConnector unlikeUserState:session toId:userID stateId:stateID receiver:^(NSData * _Nullable data, NSError * _Nullable error) {
+                if (!error) {
+                    SBJsonParser * parser = [[SBJsonParser alloc]init];
+                    NSDictionary * json = [parser objectWithData:data];
+                    int status;
+                    status = [json[@"status"] intValue];
+                    if (status==0) {
+                        [sender setImage:[UIImage imageNamed:@"peiwan_praise"] forState:UIControlStateNormal];
+                        int textlike = [self.zanNum.text intValue];
+                        self.zanNum.text = [NSString stringWithFormat:@"%d",textlike-1];
+                        self.zanNum.textColor = [CorlorTransform colorWithHexString:@"#AEBFBE"];
+                    }
+                }else{
+                    [ShowMessage showMessage:@"服务器未响应"];
+                }
+            }];
+        }
+        
+        
+    }else{
+        [UIView animateWithDuration:0.3 animations:^{
+            sender.bounds = CGRectMake(0, 0, 30, 30);
+        } completion:^(BOOL finished) {
+            if (finished == YES) {
+                sender.bounds = CGRectMake(0, 0, 20, 20);
+            }
+        }];
+        unlikeTouchCount++;
+        if (unlikeTouchCount%2==1) {
+            [UserConnector unlikeUserState:session toId:userID stateId:stateID receiver:^(NSData * _Nullable data, NSError * _Nullable error) {
+                if (!error) {
+                    SBJsonParser * parser = [[SBJsonParser alloc]init];
+                    NSDictionary * json = [parser objectWithData:data];
+                    int status;
+                    status = [json[@"status"] intValue];
+                    if (status==0) {
+                        [sender setImage:[UIImage imageNamed:@"peiwan_praise"] forState:UIControlStateNormal];
+                        int textlike = [self.zanNum.text intValue];
+                        self.zanNum.text = [NSString stringWithFormat:@"%d",textlike-1];
+                        self.zanNum.textColor = [CorlorTransform colorWithHexString:@"#AEBFBE"];
+                    }
+                }else{
+                    [ShowMessage showMessage:@"服务器未响应"];
+                }
+            }];
+            
+        }else{
+            [UserConnector likeUserState:session toId:userID stateId:stateID receiver:^(NSData * _Nullable data, NSError * _Nullable error) {
+                if (!error) {
+                    SBJsonParser * parser = [[SBJsonParser alloc]init];
+                    NSDictionary * json = [parser objectWithData:data];
+                    int status;
+                    status = [json[@"status"] intValue];
+                    if (status==0) {
+                        [sender setImage:[UIImage imageNamed:@"peiwan_praise1"] forState:UIControlStateNormal];
+                        int textlike = [self.zanNum.text intValue];
+                        self.zanNum.text = [NSString stringWithFormat:@"%d",textlike+1];
+                        self.zanNum.textColor = [CorlorTransform colorWithHexString:@"#26A3E5"];
+                    }
+                }else{
+                    [ShowMessage showMessage:@"服务器未响应"];
+                }
+            }];
+            
+        }
+    }
 }
+
 @end

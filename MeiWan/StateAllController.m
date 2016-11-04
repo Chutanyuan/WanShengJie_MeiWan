@@ -13,11 +13,13 @@
 #import "SBJsonParser.h"
 #import "MJRefresh.h"
 #import "LoginViewController.h"
-
+#import "StateOneViewController.h"
+#import "showImageController.h"
+#import "PlagerinfoViewController.h"
 
 #define limit_num 6
 
-@interface StateAllController ()<UITableViewDelegate,UITableViewDataSource,stateTitleViewDelegate>
+@interface StateAllController ()<UITableViewDelegate,UITableViewDataSource,stateTitleViewDelegate,StateNewTableViewCellDelegate>
 {
     int flag;
     int offsets;
@@ -31,22 +33,26 @@
 
 @implementation StateAllController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBar.hidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     flag = 1;
     offsets = 0;
     self.dataArray = [[NSMutableArray alloc]initWithCapacity:0];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setBarTintColor:[CorlorTransform colorWithHexString:@"78cdf8"]];
-    self.navigationController.navigationBar.hidden = YES;
 
     stateTitleView * view = [[stateTitleView alloc]initWithFrame:CGRectMake(0, 0, dtScreenWidth, 64)];
     view.delegate = self;
     view.backgroundColor = [CorlorTransform colorWithHexString:@"78cdf8"];
     [self.view addSubview:view];
     
-    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, dtScreenWidth, dtScreenHeight-64) style:UITableViewStylePlain];
+    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, dtScreenWidth, dtScreenHeight) style:UITableViewStylePlain];
     tableview.delegate = self;
     tableview.dataSource = self;
     tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -84,14 +90,19 @@
     }
     cell.scrollview.delegate = self;
     [cell.imageview removeFromSuperview];
-
     cell.UserMessage = self.dataArray[indexPath.row];
-
+    cell.delegate = self;
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    StateOneViewController * oneMessage = [[StateOneViewController alloc]init];
+    oneMessage.stateMessage = self.dataArray[indexPath.row];;
+    oneMessage.title = @"动态详情";
+    oneMessage.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:oneMessage animated:YES];
 }
 -(void)buttonclickAction:(UIButton *)sender
 {
@@ -145,14 +156,40 @@
     lv.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:lv animated:YES];
 }
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+
+-(void)PinglunClickPushWithUserID:(double)USERID StateID:(double)STATEID Dictionary:(NSDictionary *)userStateMessage
 {
-    if([scrollView  isKindOfClass:[UITableView class]]) {
-        NSLog(@"------是列表---");
-        
-    }else{
-        
-        NSLog(@"------是滚动试图----");
+    StateOneViewController * oneMessage = [[StateOneViewController alloc]init];
+    oneMessage.stateMessage = userStateMessage;
+    oneMessage.title = @"动态详情";
+    oneMessage.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:oneMessage animated:YES];
+}
+/** 展示图片 */
+-(void)touchUpInsidImageView:(NSMutableArray *)photos PhotosTag:(NSInteger)PhotosTag
+{
+    showImageController * showimage = [[showImageController alloc]init];
+    showimage.imagesArray = photos;
+    showimage.imageNumber = PhotosTag;
+    showimage.flagType = 1000;
+    showimage.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:showimage animated:NO];
+}
+-(void)headerImageViewTapGes:(NSDictionary *)UserStateMessage
+{
+    /** 
+      stateToPlager
+     */
+    NSDictionary * dic = [NSDictionary dictionaryWithObjectsAndKeys:UserStateMessage[@"userId"],@"id", nil];
+    [self performSegueWithIdentifier:@"stateToPlager" sender:dic];
+
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"stateToPlager"]) {
+        PlagerinfoViewController *pv = segue.destinationViewController;
+        pv.hidesBottomBarWhenPushed = YES;
+        pv.playerInfo = sender;
     }
 }
+    
 @end

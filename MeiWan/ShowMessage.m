@@ -48,6 +48,7 @@
     label.textAlignment = 1;
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont boldSystemFontOfSize:15];
+    label.numberOfLines = 0;
     [showview addSubview:label];
     showview.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width - LabelSize.width - 20)/2, dtScreenHeight/2, LabelSize.width+20, LabelSize.height+10);
     [UIView animateWithDuration:3 animations:^{

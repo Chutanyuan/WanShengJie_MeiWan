@@ -168,11 +168,24 @@
         cell.textLabel.text = onename[indexPath.row];
         
         if (indexPath.row==0) {
-            cell.rightlabel.text = [NSString stringWithFormat:@"%@",self.loginUserMessage[@"job"]];
+            if (_loginUserMessage[@"job"] == nil) {
+                cell.rightlabel.text = @"设置";
+            }else{
+                cell.rightlabel.text = [NSString stringWithFormat:@"%@",self.loginUserMessage[@"job"]];
+            }
+            
         }else if (indexPath.row==1){
-            cell.rightlabel.text = [NSString stringWithFormat:@"%@",self.loginUserMessage[@"xingzuo"]];
+            if (_loginUserMessage[@"xingzuo"] == nil) {
+                cell.rightlabel.text = @"设置";
+            }else{
+                cell.rightlabel.text = [NSString stringWithFormat:@"%@",self.loginUserMessage[@"xingzuo"]];
+            }
         }else if (indexPath.row==2){
-            cell.rightlabel.text = [NSString stringWithFormat:@"%@",self.loginUserMessage[@"location"]];
+            if (_loginUserMessage[@"location"] == nil) {
+                cell.rightlabel.text = @"";
+            }else{
+                cell.rightlabel.text = [NSString stringWithFormat:@"%@",self.loginUserMessage[@"location"]];
+            }
         }
     }
 

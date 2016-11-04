@@ -10,8 +10,7 @@
 
 @protocol dongtaiZanDelegate <NSObject>
 
-- (void)zanClickForNetAndAnimation:(UIButton *)sender userid:(double)userID statusID:(double)statusid;
-- (void)KeyBoardLoadWithUserid:(double)userID statusID:(double)statusid;
+- (void)KeyBoardLoadWithUserid:(double)userID statusID:(double)statusid dictionary:(NSDictionary *)dictioary;
 - (void)touchUpInsidImageView:(NSMutableArray *)photos PhotosTag:(NSInteger)PhotosTag;
 
 @end

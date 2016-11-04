@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XYView.h"
 
 @interface StateOneViewController : UIViewController
 
 @property(nonatomic,strong)NSDictionary * stateMessage;
+@property (nonatomic ,strong)XYView *views;
 
 @end

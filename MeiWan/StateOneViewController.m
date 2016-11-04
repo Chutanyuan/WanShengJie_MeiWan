@@ -9,7 +9,6 @@
 #import "StateOneViewController.h"
 #import "MeiWan-Swift.h"
 #import "DetailWithPlayerTableViewCell.h"
-#import "XYView.h"
 #import "ShowMessage.h"
 #import "stateRepliesTableViewCell.h"
 #import "showImageController.h"
@@ -25,15 +24,19 @@
 @property(nonatomic,strong)UITableView * tableview;
 @property(nonatomic,strong)UITextView * pinglunKuang;
 
-@property (nonatomic ,strong)XYView *views;
-
 @end
 
 @implementation StateOneViewController
-
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.hidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, nil];
+    
     self.countsArrays = [[NSMutableArray alloc]initWithCapacity:0];
+    
     [self findStateComment];
 
     self.view.backgroundColor = [UIColor whiteColor];
@@ -51,6 +54,7 @@
     self.views = [XYView XYveiw];
     self.views.frame = CGRectMake(0, self.view.frame.size.height- 40, self.view.frame.size.width, 40);
     self.views.textTF.tag = 1000;
+    self.views.textTF.delegate = self;
     self.views.textTF.placeholder = @"评论";
     [self.views.btn addTarget:self action:@selector(ceacllBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.views];
@@ -81,11 +85,11 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0) {
-        DetailWithPlayerTableViewCell * cell1 = [self tableView:self.tableview cellForRowAtIndexPath:indexPath];
+        UITableViewCell * cell1 = [self tableView:tableView cellForRowAtIndexPath:indexPath];
         return cell1.frame.size.height;
     }else{
-        stateRepliesTableViewCell * cellOther = [self tableView:self.tableview cellForRowAtIndexPath:indexPath];
-        return cellOther.frame.size.height;
+        UITableViewCell * cell2 = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+        return cell2.frame.size.height;
     }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -94,9 +98,9 @@
     if (indexPath.row>0) {
         [self.views.textTF becomeFirstResponder];
         self.views.textTF.placeholder = [NSString stringWithFormat:@"回复 %@",self.countsArrays[indexPath.row-1][@"fromUser"][@"nickname"]];
-        self.views.textTF.delegate = self;
         self.views.textTF.tag = 10;
         self.views.btn.tag = indexPath.row-1;
+        self.views.textTF.text = nil;
     }
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -105,7 +109,7 @@
     return YES;
 }
 
--(void)KeyBoardLoadWithUserid:(double)userID statusID:(double)statusid
+-(void)KeyBoardLoadWithUserid:(double)userID statusID:(double)statusid dictionary:(NSDictionary *)dictioary
 {
     [self.views.textTF becomeFirstResponder];
     self.views.textTF.placeholder = @" 评论 ";
@@ -134,8 +138,22 @@
     cell.countlabel.text = [NSString stringWithFormat:@"%d",number+1];
     [_views.textTF resignFirstResponder];
     
+    NSString *temp = [_views.textTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    //看剩下的字符串的长度是否为零
+    
+    if ([temp length]== 0) {
+        
+        [ShowMessage showMessage:@"不好吧 \n 全都是空格"];
+        
+        return;
+        
+    }
+    
     if (self.views.textTF.tag==1000) {
-        if (self.views.textTF.text.length>0) {
+        if ([self.views.textTF.text isEqualToString:@""]||self.views.textTF.text.length==0) {
+            [ShowMessage showMessage:@"字段不能为空"];
+        }else{
             NSString * session = [PersistenceManager getLoginSession];
             [UserConnector insertStateComment:session toId:[NSNumber numberWithDouble:userid] content:self.views.textTF.text stateId:[NSNumber numberWithDouble:stateid] receiver:^(NSData * _Nullable data, NSError * _Nullable error) {
                 if (!error) {
@@ -144,7 +162,7 @@
                     int state = [json[@"state"] intValue];
                     if (state == 0) {
                         NSString * neirong = self.views.textTF.text;
-
+                        
                         self.views.textTF.text = nil;
                         [self.views.textTF resignFirstResponder];
                         [self findStateComment];
@@ -158,18 +176,21 @@
                         } completion:^(EMMessage *message, EMError *error) {
                             NSLog(@"发送信息de %@\n%@",message,error);
                         }];
-
+                        
                     }
                 }else{
                     [ShowMessage showMessage:@"服务器未响应"];
                 }
             }];
         }
+        
     }else{
-        if (![self.views.textTF.text isEqualToString:@""]) {
+        if ([self.views.textTF.text isEqualToString:@""]||self.views.textTF.text.length==0) {
+            [ShowMessage showMessage:@"字段不能为空"];
+        }else{
             NSDictionary * sendDic = self.countsArrays[sender.tag];
             NSString * session = [PersistenceManager getLoginSession];
-          
+            
             double stateCommentID = [sendDic[@"id"] doubleValue];
             if ([sendDic objectForKey:@"stateCommentId"]) {
                 stateCommentID = [sendDic[@"stateCommentId"] doubleValue];
@@ -181,7 +202,7 @@
                     int state = [json[@"state"] intValue];
                     if (state == 0) {
                         NSString * neirong = self.views.textTF.text;
-
+                        
                         self.views.textTF.text = nil;
                         [self.views.textTF resignFirstResponder];
                         [self findStateComment];
@@ -195,7 +216,7 @@
                         } completion:^(EMMessage *message, EMError *error) {
                             NSLog(@"发送信息de %@\n%@",message,error);
                         }];
-
+                        
                     }
                 }else{
                     [ShowMessage showMessage:@"服务器未响应"];
