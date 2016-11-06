@@ -14,4 +14,5 @@
 @end
 @interface MoveActionViewController : UIViewController
 @property (nonatomic,weak)id<moveAction> delegate;
+
 @end

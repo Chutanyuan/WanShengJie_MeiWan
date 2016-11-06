@@ -11,7 +11,8 @@
 @protocol stateTitleViewDelegate <NSObject>
 
 - (void)buttonclickAction:(UIButton *)sender;
-
+- (void)AddState;
+- (void)AddYueHui;
 @end
 
 @interface stateTitleView : UIView

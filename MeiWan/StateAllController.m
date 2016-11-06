@@ -16,18 +16,22 @@
 #import "StateOneViewController.h"
 #import "showImageController.h"
 #import "PlagerinfoViewController.h"
+#import "MoveActionViewController.h"
 
 #define limit_num 6
 
-@interface StateAllController ()<UITableViewDelegate,UITableViewDataSource,stateTitleViewDelegate,StateNewTableViewCellDelegate>
+@interface StateAllController ()<UITableViewDelegate,UITableViewDataSource,stateTitleViewDelegate,StateNewTableViewCellDelegate,moveAction>
 {
     int flag;
     int offsets;
+    int officialOffset;
     UITableView * tableview;
     MBProgressHUD *HUD;
+    MBProgressHUD *officialHUD;
 }
 
 @property(nonatomic,strong)NSMutableArray * dataArray;
+@property(nonatomic,strong)NSMutableArray * officialDataArray;
 
 @end
 
@@ -43,7 +47,10 @@
     
     flag = 1;
     offsets = 0;
+    officialOffset = 0;
     self.dataArray = [[NSMutableArray alloc]initWithCapacity:0];
+    self.officialDataArray = [[NSMutableArray alloc]initWithCapacity:0];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setBarTintColor:[CorlorTransform colorWithHexString:@"78cdf8"]];
 
@@ -52,29 +59,52 @@
     view.backgroundColor = [CorlorTransform colorWithHexString:@"78cdf8"];
     [self.view addSubview:view];
     
-    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, dtScreenWidth, dtScreenHeight) style:UITableViewStylePlain];
+    tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, dtScreenWidth, dtScreenHeight-64) style:UITableViewStylePlain];
     tableview.delegate = self;
     tableview.dataSource = self;
     tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableview];
     
     [self findStatesAroundOffset:[NSNumber numberWithInt:offsets] limit:[NSNumber numberWithInt:limit_num]];
+    [self findOfficialStateOffset:officialOffset limit:limit_num];
     tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [tableview.mj_header beginRefreshing];
-        offsets = 0;
-        [self.dataArray removeAllObjects];
-        [self findStatesAroundOffset:[NSNumber numberWithInt:offsets] limit:[NSNumber numberWithInt:limit_num]];
+        if (flag==1) {
+            offsets = 0;
+            [self.dataArray removeAllObjects];
+            [self findStatesAroundOffset:[NSNumber numberWithInt:offsets] limit:[NSNumber numberWithInt:limit_num]];
+        }else if (flag==0){
+            officialOffset = 0;
+            [self.officialDataArray removeAllObjects];
+            [self findOfficialStateOffset:officialOffset limit:limit_num];
+        }else{
+            
+        }
         
     }];
     tableview.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [tableview.mj_footer beginRefreshing];
-        offsets+= limit_num;
-        [self findStatesAroundOffset:[NSNumber numberWithInt:offsets] limit:[NSNumber numberWithInt:limit_num]];
+        
+        if (flag==1) {
+            offsets+= limit_num;
+            [self findStatesAroundOffset:[NSNumber numberWithInt:offsets] limit:[NSNumber numberWithInt:limit_num]];
+        }else if (flag==0){
+            officialOffset += limit_num;
+            [self findOfficialStateOffset:officialOffset limit:limit_num];
+        }else{
+        }
     }];
+    
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArray.count;
+    if (flag==0) {
+        return self.officialDataArray.count;
+    }else if (flag==1){
+        return self.dataArray.count;
+    }else{
+        return 0;
+    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -90,7 +120,13 @@
     }
     cell.scrollview.delegate = self;
     [cell.imageview removeFromSuperview];
-    cell.UserMessage = self.dataArray[indexPath.row];
+    if (flag==1) {
+        cell.UserMessage = self.dataArray[indexPath.row];
+    }else if (flag==0){
+        cell.UserMessage = self.officialDataArray[indexPath.row];
+    }else if (flag==2){
+        
+    }
     cell.delegate = self;
     
     return cell;
@@ -113,6 +149,7 @@
     }else if ([sender.titleLabel.text isEqualToString:@"约会"]){
         flag = 2;
     }
+    [tableview reloadData];
 }
 - (void)findStatesAroundOffset:(NSNumber *)offset limit:(NSNumber *)limit
 {
@@ -146,6 +183,44 @@
 
         }else if (statues==1){
             [self loginPush];
+        }
+    }];
+}
+/** 官方动态 */
+- (void)findOfficialStateOffset:(int)offset limit:(int)limit
+{
+    if (offset==0) {
+        officialHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        officialHUD.color = [UIColor grayColor];
+        officialHUD.labelText = @"正在加载";
+        officialHUD.dimBackground = NO;
+    }
+    NSString * session = [PersistenceManager getLoginSession];
+    [UserConnector findStates:session userId:[NSNumber numberWithInt:100000] offset:[NSNumber numberWithInt:offset] limit:[NSNumber numberWithInt:limit] receiver:^(NSData * _Nullable data, NSError * _Nullable error) {
+        SBJsonParser * parser = [[SBJsonParser alloc]init];
+        NSDictionary * json = [parser objectWithData:data];
+        int status = [json[@"status"] intValue];
+        if (status == 0) {
+            
+            if (offset==0) {
+                
+                self.officialDataArray = json[@"entity"];
+                [tableview reloadData];
+                [tableview.mj_header endRefreshing];
+                [officialHUD hide:YES afterDelay:0.3];
+                
+            }else{
+                
+                [self.officialDataArray addObjectsFromArray:json[@"entity"]];
+                [tableview reloadData];
+                [tableview.mj_footer endRefreshing];
+                
+            }
+            
+        }else if (status==1){
+            [self loginPush];
+        }else{
+            
         }
     }];
 }
@@ -191,5 +266,22 @@
         pv.playerInfo = sender;
     }
 }
+
+/** 添加约会信息或者是动态 */
+-(void)AddState
+{
+    MoveActionViewController * addNewState = [[MoveActionViewController alloc]init];
+    addNewState.title = @"发布动态";
+    addNewState.delegate = self;
+    addNewState.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:addNewState animated:YES];
+}
+-(void)back
+{
+    [tableview.mj_header beginRefreshing];
+}
+-(void)AddYueHui
+{
     
+}
 @end

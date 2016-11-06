@@ -14,6 +14,9 @@
     UIButton * button;
     UIButton * button1;
     UIButton * button2;
+    
+    UIView * grayview;
+    UIView * showlabel;
 }
 @end
 
@@ -69,15 +72,63 @@
     UIImageView * imageview = (UIImageView *)[gesture view];
     static int i = 0;
     i++;
-    NSLog(@"%d",i%2);
     if (i%2==1) {
         [UIView animateWithDuration:0.3 animations:^{
             imageview.transform = CGAffineTransformMakeRotation(-135*M_PI/180.0);
             
+        } completion:^(BOOL finished) {
+            UIWindow * window = [UIApplication sharedApplication].delegate.window;
+            grayview = [[UIView alloc]initWithFrame:window.frame];
+            grayview.backgroundColor = [UIColor blackColor];
+            grayview.alpha = 0.5;
+            [window addSubview:grayview];
+            [window addSubview:imageview];
+            
+            showlabel = [[UIView alloc]initWithFrame:CGRectMake(60, 104, dtScreenWidth-120, 200)];
+            showlabel.userInteractionEnabled = YES;
+            showlabel.backgroundColor = [UIColor whiteColor];
+            showlabel.layer.cornerRadius = 10;
+            showlabel.clipsToBounds = YES;
+            [window addSubview:showlabel];
+            [window makeKeyAndVisible];
+
+            UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, showlabel.frame.size.width, 44)];
+            title.text = @"发布类型";
+            title.textColor = [CorlorTransform colorWithHexString:@"#0D8FA4"];
+            title.font = [FontOutSystem fontWithFangZhengSize:20];
+            title.textAlignment = NSTextAlignmentCenter;
+            [showlabel addSubview:title];
+            
+            UIButton * Yue = [UIButton buttonWithType:UIButtonTypeCustom];
+            Yue.backgroundColor = [CorlorTransform colorWithHexString:@"#0D8FA4"];
+            [Yue setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [Yue setTitle:@"约会" forState:UIControlStateNormal];
+            Yue.frame = CGRectMake(0, 44, showlabel.frame.size.width/2, showlabel.frame.size.height-44);
+            [Yue addTarget:self action:@selector(chooseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+            [showlabel addSubview:Yue];
+            
+            
+            UIButton * state = [UIButton buttonWithType:UIButtonTypeCustom];
+            state.backgroundColor = [UIColor whiteColor];
+            [state setTitleColor:[CorlorTransform colorWithHexString:@"#0D8FA4"] forState:UIControlStateNormal];
+
+            [state setTitle:@"动态" forState:UIControlStateNormal];
+            state.frame = CGRectMake(showlabel.frame.size.width/2, 44, showlabel.frame.size.width/2, showlabel.frame.size.height-44);
+            [Yue addTarget:self action:@selector(chooseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+            [showlabel addSubview:state];
+            
+            UILabel * colorLine = [[UILabel alloc]initWithFrame:CGRectMake(5, 44, showlabel.frame.size.width-10, 1)];
+            colorLine.backgroundColor = title.textColor;
+            [showlabel addSubview:colorLine];
+
         }];
     }else{
         [UIView animateWithDuration:0.3 animations:^{
             imageview.transform = CGAffineTransformMakeRotation(3*270*M_PI/180);
+            
+        } completion:^(BOOL finished) {
+            grayview.hidden = YES;
+            showlabel.hidden = YES;
         }];
     }
 }
@@ -89,6 +140,15 @@
     [self redLineFrameANDButtonTitleFont];
    
     [self.delegate buttonclickAction:sender];
+}
+- (void)chooseButtonClick:(UIButton *)sender
+{
+    if ([sender.titleLabel.text isEqualToString:@"约会"]) {
+        [self.delegate AddYueHui];
+    }
+    if ([sender.titleLabel.text isEqualToString:@"动态"]) {
+        [self.delegate AddState];
+    }
 }
 - (void)redLineFrameANDButtonTitleFont
 {
