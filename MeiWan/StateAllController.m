@@ -265,16 +265,17 @@
         pv.hidesBottomBarWhenPushed = YES;
         pv.playerInfo = sender;
     }
+    if ([segue.identifier isEqualToString:@"newStatus"]) {
+        MoveActionViewController * mv = segue.destinationViewController;
+        self.navigationController.navigationBar.hidden = NO;
+        mv.delegate = self;
+    }
 }
 
 /** 添加约会信息或者是动态 */
 -(void)AddState
 {
-    MoveActionViewController * addNewState = [[MoveActionViewController alloc]init];
-    addNewState.title = @"发布动态";
-    addNewState.delegate = self;
-    addNewState.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:addNewState animated:YES];
+    [self performSegueWithIdentifier:@"newStatus" sender:nil];
 }
 -(void)back
 {
