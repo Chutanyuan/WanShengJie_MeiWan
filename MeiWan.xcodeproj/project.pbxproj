@@ -511,6 +511,9 @@
 		2BDFA9581D33485F00E33681 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BDFA9571D33485F00E33681 /* PlayerView.xib */; };
 		2BE035D81D85630400CDA3FA /* dycussImageShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE035D71D85630400CDA3FA /* dycussImageShow.m */; };
 		2BE035DB1D85639800CDA3FA /* PreviewImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE035DA1D85639800CDA3FA /* PreviewImageView.m */; };
+		2BE0D93F1DD07566003CFA4D /* dateWithEspecialMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0D93D1DD07566003CFA4D /* dateWithEspecialMessageVC.m */; };
+		2BE0D9421DD07EF1003CFA4D /* dateWithEspecialMessageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE0D9411DD07EF1003CFA4D /* dateWithEspecialMessageVC.xib */; };
+		2BE0D9451DD083FA003CFA4D /* especialDateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0D9441DD083FA003CFA4D /* especialDateTableViewCell.m */; };
 		2BE0FB371D77016C0097A895 /* EaseUIResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2BE0FB361D77016C0097A895 /* EaseUIResource.bundle */; };
 		2BE236BB1D508F6600D7A859 /* WGS84TOGCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE236BA1D508F6600D7A859 /* WGS84TOGCJ02.m */; };
 		2BE25BF81D2B53A400D2AEAF /* animationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE25BF71D2B53A400D2AEAF /* animationCell.m */; };
@@ -1589,6 +1592,11 @@
 		2BE035D71D85630400CDA3FA /* dycussImageShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dycussImageShow.m; sourceTree = "<group>"; };
 		2BE035D91D85639800CDA3FA /* PreviewImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewImageView.h; sourceTree = "<group>"; };
 		2BE035DA1D85639800CDA3FA /* PreviewImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewImageView.m; sourceTree = "<group>"; };
+		2BE0D93C1DD07566003CFA4D /* dateWithEspecialMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dateWithEspecialMessageVC.h; sourceTree = "<group>"; };
+		2BE0D93D1DD07566003CFA4D /* dateWithEspecialMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dateWithEspecialMessageVC.m; sourceTree = "<group>"; };
+		2BE0D9411DD07EF1003CFA4D /* dateWithEspecialMessageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = dateWithEspecialMessageVC.xib; sourceTree = "<group>"; };
+		2BE0D9431DD083FA003CFA4D /* especialDateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = especialDateTableViewCell.h; sourceTree = "<group>"; };
+		2BE0D9441DD083FA003CFA4D /* especialDateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = especialDateTableViewCell.m; sourceTree = "<group>"; };
 		2BE0FB361D77016C0097A895 /* EaseUIResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = EaseUIResource.bundle; sourceTree = "<group>"; };
 		2BE236B91D508F6600D7A859 /* WGS84TOGCJ02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGS84TOGCJ02.h; sourceTree = "<group>"; };
 		2BE236BA1D508F6600D7A859 /* WGS84TOGCJ02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGS84TOGCJ02.m; sourceTree = "<group>"; };
@@ -3135,6 +3143,7 @@
 			children = (
 				2B79DA571DC8A30D00FCD3F2 /* StateAllController.h */,
 				2B79DA581DC8A30D00FCD3F2 /* StateAllController.m */,
+				2BE0D9381DD07300003CFA4D /* 发布约会 */,
 				2BC844C81DC9CD7D0006ED54 /* 动态cell */,
 				2BD366B21DBF4C3F001DE31B /* 单条动态 */,
 				2BC844C91DC9CD980006ED54 /* 动态导航 */,
@@ -4158,6 +4167,18 @@
 			path = EaseUI;
 			sourceTree = "<group>";
 		};
+		2BE0D9381DD07300003CFA4D /* 发布约会 */ = {
+			isa = PBXGroup;
+			children = (
+				2BE0D93C1DD07566003CFA4D /* dateWithEspecialMessageVC.h */,
+				2BE0D93D1DD07566003CFA4D /* dateWithEspecialMessageVC.m */,
+				2BE0D9411DD07EF1003CFA4D /* dateWithEspecialMessageVC.xib */,
+				2BE0D9431DD083FA003CFA4D /* especialDateTableViewCell.h */,
+				2BE0D9441DD083FA003CFA4D /* especialDateTableViewCell.m */,
+			);
+			name = "发布约会";
+			sourceTree = "<group>";
+		};
 		2BE236B81D508F2900D7A859 /* 火星坐标转化 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4548,6 +4569,7 @@
 				2BDEE4291D5B0BF900767F8B /* UMSCommentDetailController.xib in Resources */,
 				18F359D01B7ACC92005E3838 /* UserAssessTableViewCell.xib in Resources */,
 				2B5805B21D2A386800721653 /* label1.png in Resources */,
+				2BE0D9421DD07EF1003CFA4D /* dateWithEspecialMessageVC.xib in Resources */,
 				27CA5A301CEEACCB00CC6956 /* 1_loadingҳ.png in Resources */,
 				27D416051CFD8ADB00F4C7BA /* searchIcon@2x.png in Resources */,
 				27CA5A6C1CEEACCB00CC6956 /* peiwan_state@3x.png in Resources */,
@@ -4831,6 +4853,7 @@
 				18E579F41B7DDDB000771063 /* UIImageView+AFNetworking.m in Sources */,
 				2BE39E8B1D72984500CC3F0F /* UserProfileViewController.m in Sources */,
 				2BD3C5EA1D73DCC0008CFE23 /* MJRefreshBackFooter.m in Sources */,
+				2BE0D93F1DD07566003CFA4D /* dateWithEspecialMessageVC.m in Sources */,
 				18E579F31B7DDDB000771063 /* UIButton+AFNetworking.m in Sources */,
 				2BD3C5EC1D73DCC0008CFE23 /* MJRefreshFooter.m in Sources */,
 				2BD3C6131D73DCC0008CFE23 /* UIImageView+EMWebCache.m in Sources */,
@@ -4898,6 +4921,7 @@
 				2BD3C62C1D73DCC0008CFE23 /* EaseChineseToPinyin.m in Sources */,
 				2B2D085C1D530C8F00139467 /* QRCodeViewController.m in Sources */,
 				2B2D095C1D532BC300139467 /* bitstream.c in Sources */,
+				2BE0D9451DD083FA003CFA4D /* especialDateTableViewCell.m in Sources */,
 				2BD3C6431D73DCC0008CFE23 /* EaseBubbleView+Text.m in Sources */,
 				2BE542081D7EBD5B00BB5C43 /* editdescription.m in Sources */,
 				27CA60DC1CEEBAF300CC6956 /* CWStarRateView.m in Sources */,

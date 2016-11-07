@@ -17,6 +17,7 @@
 #import "showImageController.h"
 #import "PlagerinfoViewController.h"
 #import "MoveActionViewController.h"
+#import "dateWithEspecialMessageVC.h"
 
 #define limit_num 6
 
@@ -28,6 +29,10 @@
     UITableView * tableview;
     MBProgressHUD *HUD;
     MBProgressHUD *officialHUD;
+    UIView * clearView;
+    
+    UIView * showAlphaView;
+    UIView * showView;
 }
 
 @property(nonatomic,strong)NSMutableArray * dataArray;
@@ -53,6 +58,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setBarTintColor:[CorlorTransform colorWithHexString:@"78cdf8"]];
+    self.navigationController.navigationBar.titleTextAttributes=[NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
 
     stateTitleView * view = [[stateTitleView alloc]initWithFrame:CGRectMake(0, 0, dtScreenWidth, 64)];
     view.delegate = self;
@@ -78,7 +84,7 @@
             [self.officialDataArray removeAllObjects];
             [self findOfficialStateOffset:officialOffset limit:limit_num];
         }else{
-            
+            [tableview.mj_header endRefreshing];
         }
         
     }];
@@ -92,6 +98,7 @@
             officialOffset += limit_num;
             [self findOfficialStateOffset:officialOffset limit:limit_num];
         }else{
+            [tableview.mj_footer endRefreshing];
         }
     }];
     
@@ -283,6 +290,126 @@
 }
 -(void)AddYueHui
 {
+    NSArray * titleArray = @[@"线上点歌",@"视屏聊天",@"聚餐",@"线下K歌",@"夜店达人",@"叫醒服务",@"影伴",@"运动健身",@"LOL"];
+    NSArray * imageNameArray = @[@"sing",@"video-chat",@"dining",@"sing-expert",@"go-nightclubbing",@"clock",@"shadow-with",@"sports",@"lol"];
     
+    clearView = [[UIView alloc]initWithFrame:self.view.window.frame];
+    UIView * grayview = [[UIView alloc]initWithFrame:clearView.frame];
+    grayview.backgroundColor = [UIColor blackColor];
+    grayview.alpha = 0.5;
+    [clearView addSubview:grayview];
+    [self.view.window addSubview:clearView];
+    for (int i = 0; i<9; i++) {
+        
+        UIButton * chooseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        chooseButton.center = CGPointMake( dtScreenWidth/6 + i%3*dtScreenWidth/3,150 + i/3*120);
+        if (IS_IPHONE_5) {
+            chooseButton.bounds = CGRectMake(0, 0, 50, 50 );
+            chooseButton.layer.cornerRadius = 25;
+        }else{
+            chooseButton.bounds = CGRectMake(0, 0, 64, 64 );
+            chooseButton.layer.cornerRadius = 32;
+        }
+        chooseButton.clipsToBounds = YES;
+        [chooseButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",imageNameArray[i]]] forState:UIControlStateNormal];
+        
+        chooseButton.titleLabel.font = [FontOutSystem fontWithFangZhengSize:15];
+        chooseButton.tag = i;
+        [chooseButton addTarget:self action:@selector(projectLabelSelector:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [clearView addSubview:chooseButton];
+        
+        UILabel * titlelabel = [[UILabel alloc]init];
+        titlelabel.text = [NSString stringWithFormat:@"%@",titleArray[i]];
+        titlelabel.font = [FontOutSystem fontWithFangZhengSize:15.0];
+        titlelabel.textColor = [UIColor whiteColor];
+        titlelabel.textAlignment = NSTextAlignmentCenter;
+        
+        CGSize size_titlelabal = [titlelabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:titlelabel.font,NSFontAttributeName, nil]];
+        titlelabel.frame = CGRectMake(chooseButton.center.x-size_titlelabal.width/2, chooseButton.frame.origin.y+chooseButton.frame.size.width+10, size_titlelabal.width, size_titlelabal.height);
+        
+        [clearView addSubview:titlelabel];
+    }
+
+}
+- (void)projectLabelSelector:(UIButton *)sender
+{
+    clearView.hidden = YES;
+    NSDictionary * dictionary = [NSDictionary dictionaryWithDictionary:[PersistenceManager getLoginUser]];
+    int isAudit = [dictionary[@"isAudit"] intValue];
+    if (isAudit==1) {
+
+        dateWithEspecialMessageVC * especialDate = [[dateWithEspecialMessageVC alloc]init];
+        self.navigationController.navigationBar.hidden = NO;
+        especialDate.title = @"发布约会";
+        especialDate.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:especialDate animated:YES];
+
+    }else{
+        [self ZDYshowAlertView:@"由于您还不是达人用户尚无法发布约会信息"];
+    }
+}
+
+#pragma mark----zhanshi
+-(void)ZDYshowAlertView:(NSString *)message
+{
+    showAlphaView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, dtScreenWidth, dtScreenHeight)];
+    showAlphaView.backgroundColor = [UIColor blackColor];
+    showAlphaView.alpha = 0.2;
+    [self.view addSubview:showAlphaView];
+
+    showView = [[UIView alloc]init];
+    showView.center = CGPointMake(dtScreenWidth/2, dtScreenHeight/2);
+    showView.bounds = CGRectMake(0, 0, dtScreenWidth-40, 200);
+    showView.backgroundColor = [UIColor whiteColor];
+    showView.layer.cornerRadius = 5;
+    showView.clipsToBounds = YES;
+    showView.layer.borderColor = [CorlorTransform colorWithHexString:@"#e8e8e8"].CGColor;
+    showView.layer.borderWidth = 0.5;
+    [self.view addSubview:showView];
+    
+    UILabel * titlelabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, showView.frame.size.width, 40)];
+    titlelabel.font = [FontOutSystem fontWithFangZhengSize:17.0];
+    titlelabel.text = @"温馨提示";
+    titlelabel.textAlignment = NSTextAlignmentCenter;
+    [showView addSubview:titlelabel];
+    
+    UILabel * contentText = [[UILabel alloc]initWithFrame:CGRectMake(0, 40, showView.frame.size.width, showView.frame.size.height-44-40)];
+    contentText.textAlignment = NSTextAlignmentCenter;
+    contentText.numberOfLines = 0;
+    contentText.text = message;
+    contentText.backgroundColor = [CorlorTransform colorWithHexString:@"#e8e8e8"];
+    contentText.font = [FontOutSystem fontWithFangZhengSize:15.0];
+    [showView addSubview:contentText];
+    UIButton * cancel = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancel.frame = CGRectMake(0,showView.frame.size.height-44, showView.frame.size.width/2, 44);
+    [cancel setTitle:@"取消" forState:UIControlStateNormal];
+    [cancel setTitleColor:[CorlorTransform colorWithHexString:@"#b2b2b2"] forState:UIControlStateNormal];
+    [cancel addTarget:self action:@selector(sureButton:) forControlEvents:UIControlEventTouchUpInside];
+    [showView addSubview:cancel];
+    
+    UIButton * sure = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sure setTitleColor:[CorlorTransform colorWithHexString:@"#78cdf8"] forState:UIControlStateNormal];
+    sure.frame = CGRectMake(showView.frame.size.width/2, showView.frame.size.height-44, showView.frame.size.width/2, 44);
+    [sure setTitle:@"确定" forState:UIControlStateNormal];
+    [sure setBackgroundImage:[UIImage imageNamed:@"OK"] forState:UIControlStateHighlighted];
+    if (message.length>70) {
+        sure.tag = 100;
+    }else{
+        sure.tag = 0;
+    }
+    [sure addTarget:self action:@selector(sureButton:) forControlEvents:UIControlEventTouchUpInside];
+    [showView addSubview:sure];
+}
+
+- (void)sureButton:(UIButton *)sender
+{
+    showAlphaView.alpha = 0;
+    showView.alpha = 0;
+    if ([sender.titleLabel.text isEqualToString:@"确定"]) {
+        if (sender.tag==100) {
+
+        }
+    }
 }
 @end
